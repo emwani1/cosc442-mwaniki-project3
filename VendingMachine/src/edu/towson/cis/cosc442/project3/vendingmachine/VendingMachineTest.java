@@ -48,6 +48,15 @@ public class VendingMachineTest {
 		vm.addItem(vi, "A");
 		assertEquals("Cookies",vm.getItem("A").getName());
 		assertEquals(.01,vm.getItem("A").getPrice(),0.001);
+		
+		try {
+			vi = new VendingMachineItem("Chips",.01);
+			vm.addItem(vi, "A");
+	    } 
+	    catch (Exception e) {
+	        final String expected = "Slot A already occupied";
+	        assertEquals( expected, e.getMessage());
+	    } 
 	}
 	/**
 	 * Test for the removeItem() method of the {@link Vending Machine} class.
