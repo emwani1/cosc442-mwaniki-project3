@@ -1,0 +1,4 @@
+
+				Bugs
+1. The price can contain more than 2 decimals places
+2. Vending Machine class in getItem doesn’t catch the error if the vending machine slot is empty
