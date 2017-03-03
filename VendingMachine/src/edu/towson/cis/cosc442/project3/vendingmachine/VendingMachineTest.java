@@ -49,14 +49,25 @@ public class VendingMachineTest {
 		assertEquals("Cookies",vm.getItem("A").getName());
 		assertEquals(.01,vm.getItem("A").getPrice(),0.001);
 		
-		try {
-			vi = new VendingMachineItem("Chips",.01);
+		vi = new VendingMachineItem("Kit Kat",100);
+		vm.addItem(vi, "B");
+		assertEquals("Kit Kat",vm.getItem("B").getName());
+		assertEquals(100,vm.getItem("B").getPrice(),0.001);
+		
+		try{
+			vi = new VendingMachineItem("Cake",.01);
 			vm.addItem(vi, "A");
-	    } 
-	    catch (Exception e) {
-	        final String expected = "Slot A already occupied";
-	        assertEquals( expected, e.getMessage());
-	    } 
+		}catch(Exception e){
+			String except  = "Slot A already occupied";
+			assertEquals(except,e.getMessage());
+		}
+		try{
+			vi = new VendingMachineItem("Cake",.01);
+			vm.addItem(vi, "F");
+		}catch(Exception e){
+			String except  = "Invalid code for vending machine item";
+			assertEquals(except,e.getMessage());
+		}
 	}
 	/**
 	 * Test for the removeItem() method of the {@link Vending Machine} class.
@@ -64,8 +75,17 @@ public class VendingMachineTest {
 	@Test
 	public void testRemoveItem() {
 		vi = new VendingMachineItem("Hummus",50);
-		vm.addItem(vi, "B");
-		assertEquals(vi,vm.removeItem("B"));
+		vm.addItem(vi, "C");
+		assertEquals(vi,vm.removeItem("C"));
+		
+		try{
+			vm.removeItem("B");
+		}catch(Exception e){
+			String except  = "Slot B is empty -- cannot remove item";
+			assertEquals(except,e.getMessage());
+		}
+		
+		
 		
 	}
 	
@@ -75,8 +95,24 @@ public class VendingMachineTest {
 	@Test
 	public void testInsertMoney() {
 		vm.insertMoney(20.00);
-		vm.insertMoney(2.75);
-		assertEquals(22.75,vm.getBalance(),0.001);
+		vm.insertMoney(20.00);
+		assertEquals(40.00,vm.getBalance(),0.001);
+		try{
+			vm.insertMoney(-1);
+			fail();
+		}catch(Exception e){
+			String except = "Invalid amount.  Amount must be >= 0";
+			assertEquals(except,e.getMessage());
+		}
+		
+		try{
+			vm.insertMoney(56.789);
+			fail();
+		}catch(Exception e){
+			String except = "Price cannot be contain more than two decimal places";
+			assertEquals(except,e.getMessage());
+		}
+		
 		
 	}
 	/**
@@ -94,9 +130,15 @@ public class VendingMachineTest {
 	@Test
 	public void testMakePurchase() {
 		vi = new VendingMachineItem("Hummus",50);
-		vm.addItem(vi, "B");
+		vm.addItem(vi, "D");
 		vm.insertMoney(50.00);
-		assertEquals(true,vm.makePurchase("B"));
+		assertEquals(true,vm.makePurchase("D"));
+		try{
+			vm.makePurchase("A");
+		}catch(Exception e){
+			String except  = " is empty -- cannot remove item";
+			assertEquals(except,e.getMessage());
+		}
 	}
 
 	@Test

@@ -201,12 +201,9 @@ public class VendingMachine {
 	 */
 	public double returnChange() throws VendingMachineException {
 		double change = 0;
-		if(this.balance >= 0){
-			change = this.balance;
-			this.balance = INITIAL_BALANCE;
-		}else{
-			throw new VendingMachineException(INVALID_AMOUNT_MESSAGE);
-		}
+		change = this.balance;
+		this.balance = INITIAL_BALANCE;
+		
 		return change;
 	}
 }

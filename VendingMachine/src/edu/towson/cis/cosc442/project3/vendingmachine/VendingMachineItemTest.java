@@ -31,6 +31,22 @@ public class VendingMachineItemTest {
 	public void setUp() throws Exception {
 		 v1 = new VendingMachineItem("Cookies",5.00);
 		 v2 = new VendingMachineItem("Chips",20.00);
+		 try{
+			 v2 = new VendingMachineItem("Chips",-1);
+				fail();
+			}catch(Exception e){
+				String except = "Price cannot be less than zero";
+				assertEquals(except,e.getMessage());
+			}
+		 
+		 try{
+			 v2 = new VendingMachineItem("Chips",50.234);
+				fail();
+			}catch(Exception e){
+				String except = "Price cannot be contain more than two decimal places";
+				assertEquals(except,e.getMessage());
+			}
+		 
 		
 	}
 

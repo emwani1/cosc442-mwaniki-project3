@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VendingMachineTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">edu.towson.cis.cosc442.project3.vendingmachine (Mar 2, 2017 11:32:14 PM)</a> &gt; <a href="../../index.html" class="el_group">VendingMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.towson.cis.cosc442.project3.vendingmachine</a> &gt; <span class="el_source">VendingMachineTest.java</span></div><h1>VendingMachineTest.java</h1><pre class="source lang-java linenums">package edu.towson.cis.cosc442.project3.vendingmachine;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import edu.towson.cis.cosc442.project2.rectangle.Rectangle;
+/**
+ * Unit Test For Vending Machine
+ * @author edwinmwaniki
+ *
+ */
+<span class="fc" id="L17">public class VendingMachineTest {</span>
+	/**
+	 * Declaring the Vending Machine and the Vending Machine Item Objects
+	 */
+	VendingMachine vm;
+	VendingMachineItem vi;
+	/**
+	 * setUp Method
+	 * Initializes the Vending Machine Object
+	 * @throws Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L30">		vm = new VendingMachine();</span>
+<span class="fc" id="L31">	}</span>
+	
+	/**
+	 * tearDown Method
+	 *Tears down the Vending Machine object 
+	 * @throws Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+<span class="fc" id="L40">		vm = null;</span>
+<span class="fc" id="L41">	}</span>
+	/**
+	 * Test for the addItem() method of the {@link Vending Machine} class.
+	 */
+	@Test
+	public void testAddItem() {
+<span class="fc" id="L47">		vi = new VendingMachineItem(&quot;Cookies&quot;,.01);</span>
+<span class="fc" id="L48">		vm.addItem(vi, &quot;A&quot;);</span>
+<span class="fc" id="L49">		assertEquals(&quot;Cookies&quot;,vm.getItem(&quot;A&quot;).getName());</span>
+<span class="fc" id="L50">		assertEquals(.01,vm.getItem(&quot;A&quot;).getPrice(),0.001);</span>
+		
+<span class="fc" id="L52">		vi = new VendingMachineItem(&quot;Kit Kat&quot;,100);</span>
+<span class="fc" id="L53">		vm.addItem(vi, &quot;B&quot;);</span>
+<span class="fc" id="L54">		assertEquals(&quot;Kit Kat&quot;,vm.getItem(&quot;B&quot;).getName());</span>
+<span class="fc" id="L55">		assertEquals(100,vm.getItem(&quot;B&quot;).getPrice(),0.001);</span>
+		
+		try{
+<span class="fc" id="L58">			vi = new VendingMachineItem(&quot;Cake&quot;,.01);</span>
+<span class="nc" id="L59">			vm.addItem(vi, &quot;A&quot;);</span>
+<span class="pc" id="L60">		}catch(Exception e){</span>
+<span class="fc" id="L61">			String except  = &quot;Slot A already occupied&quot;;</span>
+<span class="fc" id="L62">			assertEquals(except,e.getMessage());</span>
+		}
+		try{
+<span class="fc" id="L65">			vi = new VendingMachineItem(&quot;Cake&quot;,.01);</span>
+<span class="nc" id="L66">			vm.addItem(vi, &quot;F&quot;);</span>
+<span class="pc" id="L67">		}catch(Exception e){</span>
+<span class="fc" id="L68">			String except  = &quot;Invalid code for vending machine item&quot;;</span>
+<span class="fc" id="L69">			assertEquals(except,e.getMessage());</span>
+		}
+<span class="fc" id="L71">	}</span>
+	/**
+	 * Test for the removeItem() method of the {@link Vending Machine} class.
+	 */
+	@Test
+	public void testRemoveItem() {
+<span class="fc" id="L77">		vi = new VendingMachineItem(&quot;Hummus&quot;,50);</span>
+<span class="fc" id="L78">		vm.addItem(vi, &quot;C&quot;);</span>
+<span class="fc" id="L79">		assertEquals(vi,vm.removeItem(&quot;C&quot;));</span>
+		
+		try{
+<span class="nc" id="L82">			vm.removeItem(&quot;B&quot;);</span>
+<span class="pc" id="L83">		}catch(Exception e){</span>
+<span class="fc" id="L84">			String except  = &quot;Slot B is empty -- cannot remove item&quot;;</span>
+<span class="fc" id="L85">			assertEquals(except,e.getMessage());</span>
+		}
+		
+		
+		
+<span class="fc" id="L90">	}</span>
+	
+	/**
+	 *Test for the insertMoney() method of the {@link Vending Machine} class.
+	 */
+	@Test
+	public void testInsertMoney() {
+<span class="fc" id="L97">		vm.insertMoney(20.00);</span>
+<span class="fc" id="L98">		vm.insertMoney(20.00);</span>
+<span class="fc" id="L99">		assertEquals(40.00,vm.getBalance(),0.001);</span>
+		try{
+<span class="nc" id="L101">			vm.insertMoney(-1);</span>
+<span class="nc" id="L102">			fail();</span>
+<span class="pc" id="L103">		}catch(Exception e){</span>
+<span class="fc" id="L104">			String except = &quot;Invalid amount.  Amount must be &gt;= 0&quot;;</span>
+<span class="fc" id="L105">			assertEquals(except,e.getMessage());</span>
+		}
+		
+		try{
+<span class="nc" id="L109">			vm.insertMoney(56.789);</span>
+<span class="nc" id="L110">			fail();</span>
+<span class="pc" id="L111">		}catch(Exception e){</span>
+<span class="fc" id="L112">			String except = &quot;Price cannot be contain more than two decimal places&quot;;</span>
+<span class="fc" id="L113">			assertEquals(except,e.getMessage());</span>
+		}
+		
+		
+<span class="fc" id="L117">	}</span>
+	/**
+	 * Test for the getBalance() method of the {@link Vending Machine} class.
+	 */
+	@Test
+	public void testGetBalance() {
+<span class="fc" id="L123">		vm.insertMoney(2.75);</span>
+<span class="fc" id="L124">		assertEquals(2.75,vm.getBalance(),0.0001);</span>
+<span class="fc" id="L125">	}</span>
+
+	/**
+	 * Test for the makePurchase() method of the {@link Vending Machine} class.
+	 */
+	@Test
+	public void testMakePurchase() {
+<span class="fc" id="L132">		vi = new VendingMachineItem(&quot;Hummus&quot;,50);</span>
+<span class="fc" id="L133">		vm.addItem(vi, &quot;D&quot;);</span>
+<span class="fc" id="L134">		vm.insertMoney(50.00);</span>
+<span class="fc" id="L135">		assertEquals(true,vm.makePurchase(&quot;D&quot;));</span>
+		try{
+<span class="nc" id="L137">			vm.makePurchase(&quot;A&quot;);</span>
+<span class="pc" id="L138">		}catch(Exception e){</span>
+<span class="fc" id="L139">			String except  = &quot; is empty -- cannot remove item&quot;;</span>
+<span class="fc" id="L140">			assertEquals(except,e.getMessage());</span>
+		}
+<span class="fc" id="L142">	}</span>
+
+	@Test
+	public void testReturnChange() {
+<span class="fc" id="L146">		vm.insertMoney(10.00);</span>
+<span class="fc" id="L147">		assertEquals(10.00,vm.returnChange(),0.0001);</span>
+<span class="fc" id="L148">		vi = new VendingMachineItem(&quot;Hummus&quot;,50);</span>
+<span class="fc" id="L149">		vm.insertMoney(50.00);</span>
+<span class="fc" id="L150">		vm.addItem(vi, &quot;B&quot;);</span>
+<span class="fc" id="L151">		vm.makePurchase(&quot;B&quot;);</span>
+<span class="fc" id="L152">		assertEquals(0.00,vm.returnChange(),0.0001);</span>
+<span class="fc" id="L153">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>edu.towson.cis.cosc442.project3.vendingmachine (Mar 2, 2017 11:32:14 PM)</div></body></html>
