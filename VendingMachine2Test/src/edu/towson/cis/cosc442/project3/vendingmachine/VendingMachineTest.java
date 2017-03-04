@@ -105,9 +105,37 @@ public class VendingMachineTest {
 		String code = "";
 
 		fixture.addItem(item, code);
+		
 
 		// add additional test code here
 	}
+	
+	/**
+	 * Run the void addItem(VendingMachineItem,String) method test.
+	 *
+	 * 
+	 *
+	 * 
+	 */
+	@Test
+	public void testAddItem_4() {
+		VendingMachine fixture = new VendingMachine();
+		fixture.balance = 1.0;
+		VendingMachineItem item = new VendingMachineItem("Cake", 1.0);
+		VendingMachineItem item2 = new VendingMachineItem("Coke",20);
+		String code = "A";
+		fixture.addItem(item, code);
+		try{
+		fixture.addItem(item2, code);
+		}catch(Exception e ){
+			String except  = "Slot "+code+" already occupied";
+			assertEquals(except,e.getMessage());
+		}
+		
+
+		// add additional test code here
+	}
+
 
 	/**
 	 * Run the double getBalance() method test.
@@ -273,17 +301,15 @@ public class VendingMachineTest {
 	 *
 	 * @generatedBy CodePro at 3/4/17 8:17 AM
 	 */
-	@Test(expected = edu.towson.cis.cosc442.project3.vendingmachine.VendingMachineException.class)
+	@Test
 	public void testMakePurchase_4()
 		throws Exception {
 		VendingMachine fixture = new VendingMachine();
 		fixture.balance = 1.0;
-		String code = "";
-
-		boolean result = fixture.makePurchase(code);
-
-		// add additional test code here
-		assertTrue(result);
+		String code = "A";
+		VendingMachineItem vi = new VendingMachineItem("Chips",1.00);
+		fixture.addItem(vi, code);
+		assertEquals(true,fixture.makePurchase(code));
 	}
 
 	/**
