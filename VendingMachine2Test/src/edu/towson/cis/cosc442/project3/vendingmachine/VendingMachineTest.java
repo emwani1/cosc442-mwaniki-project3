@@ -82,7 +82,7 @@ public class VendingMachineTest {
 		VendingMachine fixture = new VendingMachine();
 		fixture.balance = 1.0;
 		VendingMachineItem item = new VendingMachineItem("", 1.0);
-		String code = "A";
+		String code = "B";
 
 		fixture.addItem(item, code);
 
@@ -140,7 +140,7 @@ public class VendingMachineTest {
 		throws Exception {
 		VendingMachine fixture = new VendingMachine();
 		fixture.balance = 1.0;
-		String code = "A";
+		String code = "C";
 
 		VendingMachineItem result = fixture.getItem(code);
 
@@ -218,7 +218,7 @@ public class VendingMachineTest {
 		throws Exception {
 		VendingMachine fixture = new VendingMachine();
 		fixture.balance = Double.MAX_VALUE;
-		String code = "A";
+		String code = "D";
 
 		boolean result = fixture.makePurchase(code);
 
@@ -325,6 +325,8 @@ public class VendingMachineTest {
 		// add additional test code here
 		assertNotNull(result);
 	}
+	
+	
 
 	/**
 	 * Run the VendingMachineItem removeItem(String) method test.
@@ -345,6 +347,28 @@ public class VendingMachineTest {
 		// add additional test code here
 		assertNotNull(result);
 	}
+	
+	/**
+	 * Run the VendingMachineItem removeItem(String) method test.
+	 *
+	 * @throws Exception
+	 *
+	 * 
+	 */
+	@Test
+	public void testRemoveItem_4(){
+		VendingMachine fixture = new VendingMachine();
+		fixture.balance = 1.0;
+		String code = "B";
+		VendingMachineItem vi = new VendingMachineItem("Chips",20);
+		fixture.addItem(vi,code);
+
+		VendingMachineItem result = fixture.removeItem(code);
+
+		// add additional test code here
+		assertEquals(vi,result);
+	}
+	
 
 	/**
 	 * Run the double returnChange() method test.
